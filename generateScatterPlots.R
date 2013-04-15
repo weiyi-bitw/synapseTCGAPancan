@@ -74,3 +74,36 @@ gene3 = "BOP1"
 
 fig_8q24_3 <- pancan12Scatter(gene1, gene2, gene3)
 
+used <- list(
+	list(url=getGeneSymbolLink, name=basename(getGeneSymbolLink), wasExecuted=TRUE),
+	list(url=coltransformLink, name=basename(coltransformLink), wasExecuted=TRUE),
+	list(url=scatterLink, name=basename(scatterLink), wasExecuted=TRUE),
+	list(url=loadDataLink, name=basename(loadDataLink), wasExecuted=TRUE)
+)
+
+for(s in syn){
+	used <- c(used, list(entity=s, wasExecuted=F))
+}
+
+
+activity <- Activity(name = "Scatter plots for top genes in attractor metagenes",
+			used=used)
+
+activity <- storeEntity(activity)
+
+figFile <- File(fig_cin, synapseStore=TRUE, parentId=synScatterFolder)
+generatedBy(figFile) <- activity
+figFile <- storeEntity(figFile)
+
+figFile <- File(fig_mes, synapseStore=TRUE, parentId=synScatterFolder)
+generatedBy(figFile) <- activity
+figFile <- storeEntity(figFile)
+
+figFile <- File(fig_lym, synapseStore=TRUE, parentId=synScatterFolder)
+generatedBy(figFile) <- activity
+figFile <- storeEntity(figFile)
+
+figFile <- File(fig_8q24_3, synapseStore=TRUE, parentId=synScatterFolder)
+generatedBy(figFile) <- activity
+figFile <- storeEntity(figFile)
+

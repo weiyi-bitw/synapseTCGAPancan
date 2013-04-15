@@ -24,12 +24,13 @@ synIDs <- c(
 
 nf <- length(synIDs)
 data <- list()
+syn <- list()
 
 for(i in 1:nf){
 	synid <- synIDs[i]
 	cat("Processing",synid,"...\n" );flush.console()
-	syn <- loadEntity(synid)
-	ge <- load.exp(file.path(syn$cacheDir, syn$files[[1]]))
+	syn[[i]] <- loadEntity(synid)
+	ge <- load.exp(file.path(syn[[i]]$cacheDir, syn[[i]]$files[[1]]))
 	oo <- getGeneSymbols(rownames(ge))
 	rownames(ge) <- oo
 
