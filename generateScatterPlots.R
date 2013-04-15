@@ -1,9 +1,12 @@
-install_github(repo="DreamBox7", username="weiyi-bitw", ref="master")
 require(DreamBox7)
 require(synapseClient)
 require(fields)
+require(rGithubClient)
 
 synapseLogin()
+
+analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
+
 
 
 #==================================================
