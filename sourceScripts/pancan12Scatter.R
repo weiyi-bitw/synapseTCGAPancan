@@ -1,4 +1,4 @@
-generateScatterPlots <- function(gene1, gene2, gene3){
+pancan12Scatter <- function(gene1, gene2, gene3){
 	fileName <- paste("scatter.", gene1, "x", gene2, "x", gene3,".png", sep="")
 	fig <- path.file(figDir, fileName)
 	

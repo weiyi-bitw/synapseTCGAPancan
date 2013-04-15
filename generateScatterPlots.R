@@ -6,6 +6,12 @@ require(rGithubClient)
 synapseLogin()
 
 analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
+sourceRepoFile(analysisRepo, "sourceScripts/getGeneSymbols.R")
+sourceRepoFile(analysisRepo, "sourceScripts/coltransform.R")
+sourceRepoFile(analysisRepo, "sourceScripts/pancan12Scatter.R")
+
+
+
 
 
 
