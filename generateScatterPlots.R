@@ -6,14 +6,23 @@ require(rGithubClient)
 synapseLogin()
 
 analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
+
 sourceRepoFile(analysisRepo, "sourceScripts/getGeneSymbols.R")
+getGeneSymbolLink <- getPermlink(analysisRepo, "sourceScripts/getGeneSymbols.R")
+
 sourceRepoFile(analysisRepo, "sourceScripts/coltransform.R")
+coltransformLink <- getPermlink(analysisRepo, "sourceScripts/coltransform.R")
+
 sourceRepoFile(analysisRepo, "sourceScripts/pancan12Scatter.R")
+scatterLink <- getPermlink(analysisRepo, "sourceScripts/pancan12Scatter.R")
 
+sourceRepoFile(analysisRepo, "sourceScripts/loadTCGAPancan12RNASeq.R")
+loadDataLink <- getPermlink(analysisRepo, "sourceScripts/loadTCGAPancan12RNASeq.R")
 
+figDir <- file.path(tempdir(), "scatterPlots")
+dir.create(figDir)
 
-
-
+synScatterFolder <- "syn1759352"
 
 #==================================================
 #

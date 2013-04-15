@@ -1,6 +1,6 @@
 pancan12Scatter <- function(gene1, gene2, gene3){
 	fileName <- paste("scatter.", gene1, "x", gene2, "x", gene3,".png", sep="")
-	fig <- path.file(figDir, fileName)
+	fig <- file.path(figDir, fileName)
 	
 	png(fileName, width = 7.3, height = 8, units = "in", res = 300, pointsize=12)
 	

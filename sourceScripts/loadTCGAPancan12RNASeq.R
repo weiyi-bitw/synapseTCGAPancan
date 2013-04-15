@@ -35,6 +35,6 @@ for(i in 1:nf){
 
 	ge <- log2(ge+1)
 
-	data[[i]] = ge[intersect(genes, rownames(ge)),]
-	names(data)[i] = pancan[i]
+	data[[i]] <- ge[intersect(genes, rownames(ge)),]
+	names(data)[i] <- pancan[i]
 }
