@@ -5,7 +5,7 @@ require(synapseClient)
 
 mirnaAttractorScanning <- function(synID, map, tmpDir=tempDir()){
 	syn <- synGet(synID, downloadFile=TRUE, downloadLocation=tmpDir)
-	mirna <- loadExpr(file.path(tmpDir, syn$files[[1]]))
+	mirna <- loadExpr(file.path(tmpDir, syn$properties$name))
 	nz <- apply(mirna, 1, function(x){sum(x==0)})
 	mirna <- mirna[nz < 0.5*(ncol(mirna)), ]
 

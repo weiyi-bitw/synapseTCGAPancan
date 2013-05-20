@@ -1,5 +1,6 @@
 require(synapseClient)
 require(cafr)
+require(rGithubClient)
 
 synapseLogin()
 
@@ -26,7 +27,7 @@ dir.create(resultDir)
 
 miRNAParentID <- "syn1875845"
 used <- list(
-	list(url=mirnaAttractorScanningLink, name=basename(mirnaAttractorScanning), wasExecuted=TRUE),
+	list(url=mirnaAttractorScanningLink, name=basename(mirnaAttractorScanningLink), wasExecuted=TRUE),
 	"syn1875840"
 )
 
