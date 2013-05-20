@@ -82,7 +82,7 @@ used <- list(
 )
 
 for(s in syn){
-	used <- c(used, list(entity=s, wasExecuted=F))
+	used[[length(used)+1]] <- list(entity=s, wasExecuted=F)
 }
 
 
@@ -94,16 +94,20 @@ activity <- storeEntity(activity)
 figFile <- File(fig_cin, synapseStore=TRUE, parentId=synScatterFolder)
 generatedBy(figFile) <- activity
 figFile <- storeEntity(figFile)
+activity <- generatedBy(figFile)
 
 figFile <- File(fig_mes, synapseStore=TRUE, parentId=synScatterFolder)
 generatedBy(figFile) <- activity
 figFile <- storeEntity(figFile)
+activity <- generatedBy(figFile)
 
 figFile <- File(fig_lym, synapseStore=TRUE, parentId=synScatterFolder)
 generatedBy(figFile) <- activity
 figFile <- storeEntity(figFile)
+activity <- generatedBy(figFile)
 
 figFile <- File(fig_8q24_3, synapseStore=TRUE, parentId=synScatterFolder)
 generatedBy(figFile) <- activity
 figFile <- storeEntity(figFile)
+activity <- generatedBy(figFile)
 
