@@ -34,7 +34,7 @@ used <- list(
 
 for(i in 1:nf){
 	syn <- pancanTable[i, "miRNA"]
-	if(is.na(syn)) next
+	if(is.na(syn) | rownames(pancanTable)[i]=="GBM") next
 	x <- mirnaAttractorScanning(syn, map, tmpDir)
 	resultFile <- file.path(resultDir, paste(rownames(pancanTable)[i], ".attractorMatrix.rda", sep=""))
 	save(x, file=resultFile)
