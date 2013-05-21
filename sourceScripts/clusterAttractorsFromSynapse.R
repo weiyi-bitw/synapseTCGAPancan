@@ -18,7 +18,7 @@ clusterAttractorsFromSynapse <- function(synIDs, numGenes=100, strength.pos=10, 
     tag <- datasetTags[fn]
     syn <- synGet(can, downloadFile=TRUE, downloadLocation=tempDir)
     cat("Processing", tag, "...\n");flush.console()
-    nm <- load(file.path(tempDir, syn$properties$name), env)[1]
+    nm <- load(getFileLocation(syn), env)[1]
     x <- env[[nm]]
     na <- nrow(x)
     for(i in 1:na){
