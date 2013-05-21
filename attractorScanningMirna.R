@@ -36,7 +36,7 @@ for(i in 1:nf){
 	syn <- pancanTable[i, "miRNA"]
 	if(is.na(syn) | rownames(pancanTable)[i]=="GBM") next
 	x <- mirnaAttractorScanning(syn, map, tmpDir)
-	resultFile <- file.path(resultDir, paste(rownames(pancanTable)[i], ".attractorMatrix.rda", sep=""))
+	resultFile <- file.path(resultDir, paste(rownames(pancanTable)[i], ".attractorMatrix.mirna.rda", sep=""))
 	save(x, file=resultFile)
 	activity <- Activity(name="miRNA attractor scanning", used=c(used, syn))
 	resultFile <- File(resultFile, synapseStore=TRUE, parentId=miRNAParentID)
