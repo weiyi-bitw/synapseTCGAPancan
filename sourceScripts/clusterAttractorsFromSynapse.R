@@ -1,7 +1,7 @@
 require(cafr)
 require(synapseClient)
 
-clusterAttractorsFromSynapse <- function(synIDs, numGenes=100, strength.pos=10, min.basin=2, datasetTags=NULL, tempDir = tempdir()){
+clusterAttractorsFromSynapse <- function(synIDs, numGenes=100, strength.pos=10, min.basins=2, datasetTags=NULL, tempDir = tempdir()){
   nf <- length(synIDs)
   if(is.null(datasetTags)){
     datasetTags <- paste("Dataset", sprintf("%03d",1:nf))
