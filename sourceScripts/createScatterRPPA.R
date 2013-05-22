@@ -2,8 +2,7 @@ require(synapseClient)
 require(cafr)
 require(fields)
 
-
-createScatterMiRNA <- function(synIDList, geneList, map, filePath="./"){
+createScatterRPPA <- function(synIDList, geneList, filePath="./"){
 	nf <- length(synIDs)
 	data <- list()
 	syn <- list()
@@ -15,8 +14,6 @@ createScatterMiRNA <- function(synIDList, geneList, map, filePath="./"){
 		syn[[tag]] <- loadEntity(synid)
 		message("Processing ", tag, " (", synid, ") ...\n")
 		ge <- loadExpr(file.path(syn[[tag]]$cacheDir, syn[[tag]]$files[[1]]))
-		ge <- log2(ge + 0.5)
-		ge = probeSummarization(ge=ge, map=map, threshold=0.7, gene.colname="miR_stem")
 
 		data[[tag]] <- ge[intersect(unlist(geneList), rownames(ge)),]
 	}
@@ -48,23 +45,14 @@ createScatterMiRNA <- function(synIDList, geneList, map, filePath="./"){
 			z <- ge[gene3,]
 			z[is.infinite(z)] <- NA
 			z <- z-median(z, na.rm=T)
-			iqr.z <- quantile(z, 0.75, na.rm=T) - quantile(z, 0.25, na.rm=T)
-			z[z > (quantile(z, 0.75, na.rm=T) + 1.5*iqr.z)] <- NA
-			z[z < (quantile(z, 0.25, na.rm=T) - 1.5*iqr.z)] <- NA
 
 			x <- ge[gene1,]
 			x[is.infinite(x)] <- NA
 			x <- x-median(x, na.rm=T)
-			iqr.x <- quantile(x, 0.75, na.rm=T) - quantile(x, 0.25, na.rm=T)
-			x[x > (quantile(x, 0.75, na.rm=T) + 1.5*iqr.x)] <- NA
-			x[x < (quantile(x, 0.25, na.rm=T) - 1.5*iqr.x)] <- NA
 
 			y <- ge[gene2,]
 			y[is.infinite(y)] <- NA
 			y <- y-median(y, na.rm=T)
-			iqr.y <- quantile(y, 0.75, na.rm=T) - quantile(y, 0.25, na.rm=T)
-			y[y > (quantile(y, 0.75, na.rm=T) + 1.5*iqr.y)] <- NA
-			y[y < (quantile(y, 0.25, na.rm=T) - 1.5*iqr.y)] <- NA
 
 			idx <- !is.na(x) & !is.na(y) & !is.na(z)
 			cc <- coltransform2(z[idx])
@@ -73,9 +61,8 @@ createScatterMiRNA <- function(synIDList, geneList, map, filePath="./"){
 				xlim = c(min(-3, min(x[idx])), max(3, max(x[idx]))), ylim=c(min(-3, min(y[idx])), max(3, max(y[idx]))), 
 				main = pancan[i] , xlab=gene1, ylab=gene2, cex.axis=0.9, cex.label=1)
 			mtext(gene3, side=4, line=0.35, cex=0.7)
-			midpoint <- (median(z[idx])-min(z[idx])) / diff(range(z[idx])) 
 			image.plot( legend.only=TRUE, legend.width=0.8, legend.mar=2, zlim= range(z[idx]),  
-				col = designer.colors(col=c("blue", "grey", "red"), x=c(0, midpoint, 1)), axis.args=list(cex.axis=0.9)) 
+				col = colorMapping3(xbreak=c(min(z[idx]), median(z[idx]), max(z[idx]))), axis.args=list(cex.axis=0.9)) 
 		}	
 
 		dev.off()       #Write

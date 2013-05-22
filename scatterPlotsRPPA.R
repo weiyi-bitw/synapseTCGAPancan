@@ -11,21 +11,18 @@ analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
 
 sourceRepoFile(analysisRepo, "sourceScripts/coltransform2.R")
 coltransformLink <- getPermlink(analysisRepo, "sourceScripts/coltransform2.R")
-sourceRepoFile(analysisRepo, "sourceScripts/createScatterMiRNA.R")
-scatterMiRNALink <- getPermlink(analysisRepo, "sourceScripts/createScatterMiRNA.R")
+sourceRepoFile(analysisRepo, "sourceScripts/colorMapping3.R")
+colmapLink <- getPermlink(analysisRepo, "sourceScripts/colorMapping3.R")
+sourceRepoFile(analysisRepo, "sourceScripts/createScatterRPPA.R")
+scatterRPPALink <- getPermlink(analysisRepo, "sourceScripts/createScatterRPPA.R")
 
 # load pancan syn ID table
 syn <- synGet("syn1875837", downloadFile=T, downloadLocation=tmpDir)
 pancanTable <- loadClin(getFileLocation(syn))
 nf <- nrow(pancanTable)
 
-# load miRNA stem name map
-syn <- synGet("syn1875840", downloadFile=T, downloadLocation=tmpDir)
-nm <- load(file.path(tmpDir, syn$properties$name), env)
-map <- env[[nm]]
-
-# load miRNA attractome
-syn <- synGet("syn1876073", downloadFile=T, downloadLocation=tmpDir)
+# load RPPA attractome
+syn <- synGet("syn1876317", downloadFile=T, downloadLocation=tmpDir)
 nm <- load(getFileLocation(syn), env)
 attractome <- env[[nm]]
 
@@ -34,14 +31,14 @@ dir.create(resultDir)
 
 scatterParentID <- "syn1759352"
 used <- list(
-	list(url=scatterMiRNALink, name=basename(scatterMiRNALink), wasExecuted=TRUE),
+	list(url=scatterMiRNALink, name=basename(scatterRPPALink), wasExecuted=TRUE),
 	list(url=coltransformLink, name=basename(coltransformLink), wasExecuted=TRUE),
+	list(url=colmapLink, name=basename(colmapLink), wasExecuted=TRUE),
 	"syn1875837",
-	"syn1875840",
-	"syn1876073"
+	"syn1876317"
 )
 
-synIDs <- pancanTable[,"miRNA"]
+synIDs <- pancanTable[,"RPPA"]
 names(synIDs) <- rownames(pancanTable)
 synIDs <- synIDs[order(names(synIDs))]
 idx <- !is.na(synIDs)
@@ -53,7 +50,7 @@ for(s in synIDs){
 }
 
 geneList <- lapply(attractome, function(a){a[1:3,1]})
-fList <- createScatterMiRNA(synIDList, geneList, map, filePath=resultDir)
+fList <- createScatterRPPA(synIDList, geneList, filePath=resultDir)
 
 nf <- length(fList)
 
