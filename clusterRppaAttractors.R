@@ -18,22 +18,22 @@ consensusLink <- getPermlink(analysisRepo, "sourceScripts/createConsensusFromSyn
 
 # miRNA attractor matrices Synapse ID
 synIDs <- c(
-	"syn1875859",	#BLCA
-	"syn1875869",	#BRCA
-	"syn1875867",	#COAD
-	"syn1875857",	#HNSC
-	"syn1875861",	#KIRC
-	"syn1875854",	#LAML
-	"syn1875865",	#LUAD
-	"syn1875850",	#LUSC
-	"syn1875871",	#OV
-	"syn1875852",	#READ
-	"syn1875863"	#UCEC
+	"syn1875924",	#BLCA
+	"syn1875934",	#BRCA
+	"syn1875932",	#COAD
+	"syn1875920",	#GBM
+	"syn1875922",	#HNSC
+	"syn1875926",	#KIRC
+	"syn1875930",	#LUAD
+	"syn1875914",	#LUSC
+	"syn1875936",	#OV
+	"syn1875918",	#READ
+	"syn1875928"	#UCEC
 )
 
-datasetTags <- c("BLCA", "BRCA", "COAD", "HNSC", "KIRC", "LAML", "LUAD", "LUSC", "OV", "READ", "UCEC")
+datasetTags <- c("BLCA", "BRCA", "COAD", "GBM", "HNSC", "KIRC", "LUAD", "LUSC", "OV", "READ", "UCEC")
 
-miRNAParentID <- "syn1875845"
+rppaParentID <- "syn1875889"
 
 used <- list(
 	list(url=clusterLink, name=basename(clusterLink), wasExecuted=TRUE),
@@ -58,19 +58,19 @@ attractome <- createConsensusFromSynapse(alist, synIDList, minGenes=3, tempDir=t
 
 
 # save files and upload to Synapse
-resultFile.cluster <- file.path(resultDir, "attractorClusters.mirna.rda")
+resultFile.cluster <- file.path(resultDir, "attractorClusters.rppa.rda")
 save(alist, file=resultFile.cluster)
-resultFile.consensus <- file.path(resultDir, "attractome.mirna.rda")
+resultFile.consensus <- file.path(resultDir, "attractome.rppa.rda")
 save(attractome, file=resultFile.consensus)
 
-activity <- Activity(name="Attractor clustering, NG=5, Str=3rd MI", used=used)
+activity <- Activity(name="Attractor clustering", used=used, description="numGenes=5, strength.pos=3")
 
-resultFile.cluster <- File(resultFile.cluster, synapseStore=TRUE, parentId=miRNAParentID)
+resultFile.cluster <- File(resultFile.cluster, synapseStore=TRUE, parentId=rppaParentID)
 generatedBy(resultFile.cluster) <- activity
 resultFile.cluster <- storeEntity(resultFile.cluster)
 activity <- generatedBy(resultFile.cluster)
 
-resultFile.consensus <- File(resultFile.consensus, synapseStore=TRUE, parentId=miRNAParentID)
+resultFile.consensus <- File(resultFile.consensus, synapseStore=TRUE, parentId=rppaParentID)
 generatedBy(resultFile.consensus) <- activity
 resultFile.consensus <- storeEntity(resultFile.consensus)
 activity <- generatedBy(resultFile.consensus)
