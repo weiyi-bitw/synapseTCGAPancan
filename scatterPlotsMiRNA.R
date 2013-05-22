@@ -9,20 +9,23 @@ env <- new.env()
 
 analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
 
-sourceRepoFile(analysisRepo, "sourceScripts/getGeneSymbols.R")
-getGeneSymbolLink <- getPermlink(analysisRepo, "sourceScripts/getGeneSymbols.R")
 sourceRepoFile(analysisRepo, "sourceScripts/coltransform2.R")
 coltransformLink <- getPermlink(analysisRepo, "sourceScripts/coltransform2.R")
-sourceRepoFile(analysisRepo, "sourceScripts/createScatterRNASeq.R")
-scatterRNASeqLink <- getPermlink(analysisRepo, "sourceScripts/createScatterRNASeq.R")
+sourceRepoFile(analysisRepo, "sourceScripts/createScatterMiRNA.R")
+scatterMiRNALink <- getPermlink(analysisRepo, "sourceScripts/createScatterMiRNA.R")
 
 # load pancan syn ID table
 syn <- synGet("syn1875837", downloadFile=T, downloadLocation=tmpDir)
 pancanTable <- loadClin(getFileLocation(syn))
 nf <- nrow(pancanTable)
 
+# load miRNA stem name map
+syn <- synGet("syn1875840", downloadFile=T, downloadLocation=tmpDir)
+nm <- load(file.path(tmpDir, syn$properties$name), env)
+map <- env[[nm]]
+
 # load RNASeq attractome
-syn <- synGet("syn1876552", downloadFile=T, downloadLocation=tmpDir)
+syn <- synGet("syn1876073", downloadFile=T, downloadLocation=tmpDir)
 nm <- load(getFileLocation(syn), env)
 attractome <- env[[nm]]
 
@@ -31,14 +34,14 @@ dir.create(resultDir)
 
 scatterParentID <- "syn1759352"
 used <- list(
-	list(url=scatterRNASeqLink, name=basename(scatterRNASeqLink), wasExecuted=TRUE),
-	list(url=getGeneSymbolLink, name=basename(getGeneSymbolLink), wasExecuted=TRUE),
+	list(url=scatterMiRNALink, name=basename(scatterMiRNALink), wasExecuted=TRUE),
 	list(url=coltransformLink, name=basename(coltransformLink), wasExecuted=TRUE),
 	"syn1875837",
-	"syn1876552"
+	"syn1875840",
+	"syn1876073"
 )
 
-synIDs <- pancanTable[,"RNASeq"]
+synIDs <- pancanTable[,"miRNA"]
 names(synIDs) <- rownames(pancanTable)
 synIDs <- synIDs[order(names(synIDs))]
 idx <- !is.na(synIDs)
@@ -50,7 +53,7 @@ for(s in synIDs){
 }
 
 geneList <- lapply(attractome, function(a){a[1:3,1]})
-fList <- createScatterRNASeq(synIDList, geneList, filePath=resultDir)
+fList <- createScatterMiRNA(synIDList, geneList, map, filePath=resultDir)
 
 nf <- length(fList)
 

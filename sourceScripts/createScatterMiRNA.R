@@ -3,7 +3,7 @@ require(cafr)
 require(fields)
 
 
-createScatterRNASeq <- function(synIDList, geneList, filePath="./"){
+createScatterMiRNA <- function(synIDList, geneList, map, filePath="./"){
 	nf <- length(synIDs)
 	data <- list()
 	syn <- list()
@@ -16,11 +16,9 @@ createScatterRNASeq <- function(synIDList, geneList, filePath="./"){
 		message("Processing ", tag, " (", synid, ") ...\n")
 		ge <- loadExpr(file.path(syn[[tag]]$cacheDir, syn[[tag]]$files[[1]]))
 		ge <- log2(ge + 0.5)
+		ge = probeSummarization(ge=ge, map=map, threshold=0.7, gene.colname="miR_stem")
 
 		data[[tag]] <- ge[intersect(unlist(geneList), rownames(ge)),]
-
-		oo <- getGeneSymbols(rownames(data[[tag]]))
-		rownames(data[[tag]]) <- oo
 	}
 
 	geneList <- lapply(geneList, getGeneSymbols)
