@@ -64,10 +64,6 @@ createConsensusFromSynapse <- function(alist, synIDList, minScore=0.5, minGenes=
     names(attractome)[[length(attractome)]] <- cssMI[1,1]
     cnt <- cnt + 1
   }
-  if(outputMat){
-    cMat[[cssMI[1, 1]]] <- mat[cssMI[1:sz,1],]
-    return(list(attractome=attractome, consensusMat=cMat))
-  }
   return (attractome)
 
 }

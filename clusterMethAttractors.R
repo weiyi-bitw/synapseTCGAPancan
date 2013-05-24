@@ -48,7 +48,7 @@ resultDir <- file.path(tmpDir, "attractors")
 dir.create(resultDir)
 
 # clustering attractors
-alist <- clusterAttractorsFromSynapse(synIDs, numGenes=100, strength.pos=10, datasetTags=datasetTags, tempDir=tmpDir)
+alist <- clusterAttractorsFromSynapse(synIDs, numGenes=50, strength.pos=10, datasetTags=datasetTags, tempDir=tmpDir)
 
 # creating consensus miRNA ranking from attractor clusters
 synIDList <- as.list(synIDs)
@@ -62,7 +62,7 @@ save(alist, file=resultFile.cluster)
 resultFile.consensus <- file.path(resultDir, "attractome.meth.rda")
 save(attractome, file=resultFile.consensus)
 
-activity <- Activity(name="Attractor clustering", used=used, description="numGenes=100, strength.pos=10")
+activity <- Activity(name="Attractor clustering", used=used, description="numGenes=50, strength.pos=10")
 
 resultFile.cluster <- File(resultFile.cluster, synapseStore=TRUE, parentId=methParentID)
 generatedBy(resultFile.cluster) <- activity

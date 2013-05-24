@@ -23,7 +23,7 @@ nf <- nrow(pancanTable)
 
 # load methylation probe map
 syn <- synGet("syn1875841", downloadFile=T, downloadLocation=tmpDir)
-nm <- load(file.path(tmpDir, syn$properties$name), env)
+nm <- load(getFileLocation(syn), env)
 map <- env[[nm]]
 
 # load methylation attractome
@@ -40,15 +40,15 @@ used <- list(
 	list(url=coltransformLink, name=basename(coltransformLink), wasExecuted=TRUE),
 	list(url=colmapLink, name=basename(colmapLink), wasExecuted=TRUE),
 	"syn1875837",
-	"syn1875840",
-	"syn1876073"
+	"syn1875841",
+	"syn1876325"
 )
 
 synIDs <- pancanTable[,"methylation_27k"]
 names(synIDs) <- rownames(pancanTable)
 synIDs <- synIDs[order(names(synIDs))]
-idx <- !is.na(synIDs)
-synIDs <- synIDs[idx]
+synIDs['BLCA'] <- 'syn1889358'
+synIDs['HNSC'] <- 'syn1889356'
 synIDList <- as.list(synIDs)
 
 for(s in synIDs){
