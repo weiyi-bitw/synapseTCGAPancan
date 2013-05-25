@@ -90,6 +90,10 @@ clusterAttractorsFromSynapse <- function(synIDs, numGenes=100, strength.pos=10, 
   alist <- attractorPool
   sizes <- unlist(lapply(alist, function(x){if(class(x)=="Attractor") return (1); return(length(x$attractors))}))
   alist[sizes < 6] <- NULL
+
+  topOvlp <- unlist(lapply(alist, function(x){if(class(x) == "Attractor") return (1); return ( x$getGeneTable(1)[1] )}))
+  alist <- alist[topOvlp >= 6]
+
   na <- length(alist)
 
   for(i in 1:na){
@@ -100,6 +104,10 @@ clusterAttractorsFromSynapse <- function(synIDs, numGenes=100, strength.pos=10, 
   }
   scores <- unlist(lapply(alist, function(x){x$medStrength} ))
   alist <- alist[order(scores, decreasing=T)]
+  topOvlp = unlist(lapply(alist, function(x){if(class(x)=="Attractor") return(1); return(x$getGeneTable(1)[1])}))
+  alist[topOvlp < 6] = NULL
+
+
   return (alist)
 
 }

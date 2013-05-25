@@ -11,8 +11,8 @@ analysisRepo <- getRepo("weiyi-bitw/synapseTCGAPancan")
 
 sourceRepoFile(analysisRepo, "sourceScripts/coltransform2.R")
 coltransformLink <- getPermlink(analysisRepo, "sourceScripts/coltransform2.R")
-sourceRepoFile(analysisRepo, "sourceScripts/createScatterMiRNA.R")
-scatterMiRNALink <- getPermlink(analysisRepo, "sourceScripts/createScatterMiRNA.R")
+sourceRepoFile(analysisRepo, "sourceScripts/createScatterMeth.R")
+scatterMethLink <- getPermlink(analysisRepo, "sourceScripts/createScatterMeth.R")
 sourceRepoFile(analysisRepo, "sourceScripts/colorMapping3.R")
 colmapLink <- getPermlink(analysisRepo, "sourceScripts/colorMapping3.R")
 
@@ -36,7 +36,7 @@ dir.create(resultDir)
 
 scatterParentID <- "syn1759352"
 used <- list(
-	list(url=scatterMiRNALink, name=basename(scatterMiRNALink), wasExecuted=TRUE),
+	list(url=scatterMethLink, name=basename(scatterMethLink), wasExecuted=TRUE),
 	list(url=coltransformLink, name=basename(coltransformLink), wasExecuted=TRUE),
 	list(url=colmapLink, name=basename(colmapLink), wasExecuted=TRUE),
 	"syn1875837",
@@ -56,7 +56,7 @@ for(s in synIDs){
 }
 
 geneList <- lapply(attractome, function(a){a[1:3,1]})
-fList <- createScatterMiRNA(synIDList, geneList, map, filePath=resultDir)
+fList <- createScatterMeth(synIDList, geneList, map, filePath=resultDir)
 
 nf <- length(fList)
 

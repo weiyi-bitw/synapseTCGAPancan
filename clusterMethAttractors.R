@@ -16,11 +16,13 @@ sourceRepoFile(analysisRepo, "sourceScripts/createConsensusFromSynapse.R")
 consensusLink <- getPermlink(analysisRepo, "sourceScripts/createConsensusFromSynapse.R")
 
 
-# miRNA attractor matrices Synapse ID
+# meth attractor matrices Synapse ID
 synIDs <- c(
+	"syn1895440",	#BLCA
 	"syn1876059",	#BRCA
 	"syn1876058",	#COAD
 	"syn1876048",	#GBM
+	"syn1895920",	#HNSC
 	"syn1876052",	#KIRC
 	"syn1876050", 	#LAML
 	"syn1876056",	#LUAD
@@ -30,7 +32,7 @@ synIDs <- c(
 	"syn1876054"	#UCEC
 )
 
-datasetTags <- c("BRCA", "COAD", "GBM","KIRC", "LAML", "LUAD", "LUSC", "OV", "READ", "UCEC")
+datasetTags <- c("BLCA","BRCA", "COAD", "GBM", "HNSC", "KIRC", "LAML", "LUAD", "LUSC", "OV", "READ", "UCEC")
 
 methParentID <- "syn1876042"
 
