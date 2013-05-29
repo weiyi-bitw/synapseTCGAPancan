@@ -1,3 +1,5 @@
 *.swp
 uploadRNASeqAttractors.R
+uploadGLRNASeqAttractors.R
+uploadGLRNASeqAttractorClusters.R
 uploadMethAttractors.R
