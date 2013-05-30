@@ -56,7 +56,12 @@ alist <- clusterAttractorsFromSynapse(synIDs, numGenes=20, strength.pos=10, data
 synIDList <- as.list(synIDs)
 names(synIDList) <- datasetTags
 attractome <- createConsensusFromSynapse(alist, synIDList, minGenes=10, tempDir=tmpDir)
+names(attractome)[1:4] <- c("LYM", "CIN", "MES", "END")
 
+# removing weak attractor from attractor clusters using attractome data
+topGenes <- unlist(lapply(attractome, function(x){x[1,1]}))
+idx <-  unlist(lapply( lapply(alist, function(x){ names(x$getConsensus(5))}) , function(x){sum(topGenes %in% x)}))
+alist <- alist[idx==1]
 
 # save files and upload to Synapse
 resultFile.cluster <- file.path(resultDir, "attractorClusters.rnaseq.rda")

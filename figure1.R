@@ -13,8 +13,8 @@ sourceRepoFile(analysisRepo, "sourceScripts/getGeneSymbols.R")
 getGeneSymbolLink <- getPermlink(analysisRepo, "sourceScripts/getGeneSymbols.R")
 sourceRepoFile(analysisRepo, "sourceScripts/coltransform2.R")
 coltransformLink <- getPermlink(analysisRepo, "sourceScripts/coltransform2.R")
-sourceRepoFile(analysisRepo, "sourceScripts/createScatterRNASeq.R")
-scatterRNASeqLink <- getPermlink(analysisRepo, "sourceScripts/createScatterRNASeq.R")
+sourceRepoFile(analysisRepo, "sourceScripts/createFigure1.R")
+scatterRNASeqLink <- getPermlink(analysisRepo, "sourceScripts/createFigure1.R")
 
 # load pancan syn ID table
 syn <- synGet("syn1875837", downloadFile=T, downloadLocation=tmpDir)
@@ -29,7 +29,7 @@ attractome <- env[[nm]]
 resultDir <- file.path(tmpDir, "scatter")
 dir.create(resultDir)
 
-scatterParentID <- "syn1759352"
+scatterParentID <- "syn1899337"
 used <- list(
 	list(url=scatterRNASeqLink, name=basename(scatterRNASeqLink), wasExecuted=TRUE),
 	list(url=getGeneSymbolLink, name=basename(getGeneSymbolLink), wasExecuted=TRUE),

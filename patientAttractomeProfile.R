@@ -16,6 +16,10 @@ syn <- synGet("syn1876552", downloadFile=T, downloadLocation=tmpDir)
 nm <- load(getFileLocation(syn), env)
 attractome.rnaseq <- env[[nm]]
 
+syn <- synGet("syn1899322", downloadFile=T, downloadLocation=tmpDir)
+nm <- load(getFileLocation(syn), env)
+attractome.rnaseq <- c(attractome.rnaseq,env[[nm]][1:3])
+
 
 # load methylation probe map
 syn <- synGet("syn1875841", downloadFile=T, downloadLocation=tmpDir)
@@ -46,6 +50,7 @@ attractome.rppa <- env[[nm]]
 allattractome = list(rnaseq = attractome.rnaseq, mirna = attractome.mirna, rppa = attractome.rppa, meth = attractome.meth)
 pancanParentID <- "syn1876760"
 used <- list(
+  "syn1899322",
   "syn1876552",
   "syn1876325",
   "syn1875840",
@@ -53,7 +58,7 @@ used <- list(
 )
 attractomeFile <- file.path(tmpDir, "allattractome.rda")
 save(allattractome, file=attractomeFile)
-activity <- Activity(name="Attractome, ASSEMBLE!!", used=used)
+activity <- Activity(name="Attractome, ASSEMBLE!!", used=used, description="**Only top 3 GL mRNA attractors were included")
 syn <- File(attractomeFile, synapseStore=TRUE, parentId=pancanParentID)
 generatedBy(syn) <- activity
 syn <- storeEntity(syn)
@@ -153,4 +158,16 @@ if(!is.na(synID)){
 meta.pancan[[t]] = temp
 }
 
+used <- list(
+	"syn1895985",
+	"syn1875837"	
+)
 
+
+metascoreFile <- file.path(tmpDir, "meta.pancan.rda")
+save(meta.pancan, file=metascoreFile)
+activity <- Activity(name="Patient-centered attractome profile", used=used, description="**Only top 3 GL mRNA attractors were included")
+syn <- File(metascoreFile, synapseStore=TRUE, parentId=pancanParentID)
+generatedBy(syn) <- activity
+syn <- storeEntity(syn)
+activity <- generatedBy(syn)
