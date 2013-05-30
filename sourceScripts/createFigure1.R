@@ -84,6 +84,6 @@ createFigure1 <- function(synIDList, geneList, filePath="./"){
 
 		dev.off()       #Write
 		figList[[j]] <- fig
-	
+	}
 	return (figList)
 }
