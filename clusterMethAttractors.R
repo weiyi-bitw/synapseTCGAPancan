@@ -57,6 +57,10 @@ synIDList <- as.list(synIDs)
 names(synIDList) <- datasetTags
 attractome <- createConsensusFromSynapse(alist, synIDList, minGenes=10, tempDir=tmpDir)
 
+# remove X chromosome attractor
+alist[[1]] <- NULL
+attractome[[1]] <- NULL
+
 
 # save files and upload to Synapse
 resultFile.cluster <- file.path(resultDir, "attractorClusters.meth.rda")
@@ -64,7 +68,7 @@ save(alist, file=resultFile.cluster)
 resultFile.consensus <- file.path(resultDir, "attractome.meth.rda")
 save(attractome, file=resultFile.consensus)
 
-activity <- Activity(name="Attractor clustering", used=used, description="numGenes=50, strength.pos=10")
+activity <- Activity(name="Attractor clustering", used=used, description="numGenes=50, strength.pos=10, *remove sex chromosome attractors")
 
 resultFile.cluster <- File(resultFile.cluster, synapseStore=TRUE, parentId=methParentID)
 generatedBy(resultFile.cluster) <- activity

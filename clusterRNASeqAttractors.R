@@ -16,7 +16,7 @@ sourceRepoFile(analysisRepo, "sourceScripts/createConsensusFromSynapse.R")
 consensusLink <- getPermlink(analysisRepo, "sourceScripts/createConsensusFromSynapse.R")
 
 
-# miRNA attractor matrices Synapse ID
+# mRNA attractor matrices Synapse ID
 synIDs <- c(
 	"syn1876029",	#BLCA
 	"syn1876039",	#BRCA

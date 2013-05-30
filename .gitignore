@@ -3,3 +3,4 @@ uploadRNASeqAttractors.R
 uploadGLRNASeqAttractors.R
 uploadGLRNASeqAttractorClusters.R
 uploadMethAttractors.R
+uploadGLRNASeqAttractome.R
